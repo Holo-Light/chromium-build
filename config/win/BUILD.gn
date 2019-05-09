@@ -316,6 +316,21 @@ config("runtime_library") {
     # When not targeting Windows Runtime, make sure the WINAPI family is set
     # to desktop.
     defines += [ "WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP" ]
+    
+    cflags_cc += [
+      "/std:c++17",
+      "/Zc:__cplusplus",
+    ]
+    
+    if (is_clang && (current_cpu == "arm" || current_cpu == "arm64")) {
+      cflags_cc += [
+        "/EHs-c-",
+      ]
+    } else {
+      cflags_cc += [
+        "/EHsc"
+      ]
+    }
   }
 }
 
