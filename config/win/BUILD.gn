@@ -334,6 +334,13 @@ config("runtime_library") {
   }
 }
 
+config("cpp17") {
+  cflags_cc = [
+    "/std:c++17",
+    "/Zc:__cplusplus",
+  ]
+}
+
 # Sets the default Windows build version. This is separated because some
 # targets need to manually override it for their compiles.
 config("winver") {
@@ -461,7 +468,7 @@ config("default_crt") {
       configs = [ ":dynamic_crt" ]
     } else {
       # Desktop Windows: static CRT.
-      configs = [ ":dynamic_crt" ]
+      configs = [ ":static_crt" ]
     }
   }
 }
