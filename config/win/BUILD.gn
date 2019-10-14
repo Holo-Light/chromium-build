@@ -296,7 +296,7 @@ config("runtime_library") {
     } else {
       defines += [ "WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP" ]
     }
-    
+
     #TEMPORARY!!! Clang-cl.exe missing unwind support for Windows arm and arm64. This will generate errors in places where try/catch are used
     if (is_clang && (current_cpu == "arm" || current_cpu == "arm64")) {
       cflags_cc += [
@@ -327,12 +327,12 @@ config("runtime_library") {
     # When not targeting Windows Runtime, make sure the WINAPI family is set
     # to desktop.
     defines += [ "WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP" ]
-    
+
     cflags_cc += [
       "/std:c++17",
       "/Zc:__cplusplus",
     ]
-    
+
     if (is_clang && (current_cpu == "arm" || current_cpu == "arm64")) {
       cflags_cc += [
         "/EHs-c-",
@@ -521,6 +521,10 @@ if (current_cpu == "x64") {
   # The number after the comma is the minimum required OS version.
   # 5.02 = Windows Server 2003.
   subsystem_version_suffix = ",5.02"
+} else if (current_cpu == "arm") {
+  # The number after the comma is the minimum required OS version.
+  # 5.02 = Windows Server 2003.
+  subsystem_version_suffix = ",6.2"
 } else {
   # 5.01 = Windows XP.
   subsystem_version_suffix = ",5.01"
