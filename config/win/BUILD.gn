@@ -432,6 +432,10 @@ config("common_linker_setup") {
     }
   } else {
     ldflags += [ "/DYNAMICBASE" ]
+
+    if (current_os == "winuwp") {
+      ldflags = [ "/APPCONTAINER" ]
+    }
   }
 
   if (win_linker_timing) {
@@ -526,8 +530,16 @@ if (current_cpu == "x64") {
   # 5.02 = Windows Server 2003.
   subsystem_version_suffix = ",6.2"
 } else {
-  # 5.01 = Windows XP.
-  subsystem_version_suffix = ",5.01"
+  if (current_os == "winuwp") {
+    # AppContainer has been first integrated into Windows 8, which
+    # is NT 6.2, so we use that as a minimum subsystem version.
+    # Otherwise the linker complains when we add /APPCONTAINER to its
+    # flags.
+    subsystem_version_suffix = ",6.2"
+  } else {
+    # 5.01 = Windows XP.
+    subsystem_version_suffix = ",5.01"
+  }
 }
 
 config("console") {
