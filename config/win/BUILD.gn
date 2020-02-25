@@ -434,7 +434,7 @@ config("common_linker_setup") {
     ldflags += [ "/DYNAMICBASE" ]
 
     if (current_os == "winuwp") {
-      ldflags = [ "/APPCONTAINER" ]
+      ldflags += [ "/APPCONTAINER" ]
     }
   }
 
