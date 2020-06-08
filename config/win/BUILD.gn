@@ -529,6 +529,10 @@ if (current_cpu == "x64") {
   # The number after the comma is the minimum required OS version.
   # 5.02 = Windows Server 2003.
   subsystem_version_suffix = ",6.2"
+} else {
+  # for some reason x86 UWP prepare breaks on a fresh checkout and complains about
+  # subsystem_version_suffix not being defined. Wtf.
+  subsystem_version_suffix = ",5.01"
 }
 
 if (current_os == "winuwp") {
